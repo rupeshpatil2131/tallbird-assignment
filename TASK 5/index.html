@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $("#api-resp-table").hide();
+            let firstTime = true;
+
+            $("button").click(function () {
+                $.ajax({
+                    url: "https://jsonplaceholder.typicode.com/users",
+                    success: function (result) {
+                        firstTime = false;
+                        $("#api-resp-table").show();
+                        result.forEach((element) => {
+                            let markup = `<tr>
+                            <td>${element.id}</td>
+                            <td>${element.name}</td>
+                            <td>${element.username}</td>
+                            <td>${element.email}</td>
+                            <td>${JSON.stringify(element.address)}</td>
+                            </tr>`;
+                            $("#api-resp-table tbody").append(markup);
+                        })
+                        hideButton();
+                    }
+                });
+            });
+        });
+
+        function hideButton() {
+            $("#btn").hide();
+        }
+    </script>
+</head>
+
+<body>
+
+    <button id="btn">CALL GET API</button>
+
+    <table id="api-resp-table" style="display:none;border:2px solid black" border="1">
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>username</th>
+            <th>email</th>
+            <th>address</th>
+        </tr>
+    </table>
+
+</body>

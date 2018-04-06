@@ -1,0 +1,111 @@
+<html>
+
+<head>
+	<title>HTML form</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+
+	<script type="text/javascript" src="js/birthdate.js"></script>
+	<script>
+
+		$(document).ready(function () {
+			$('select').formSelect();
+		});
+
+		function output() {
+			let fn = document.getElementById('fname').value;
+			let ln = document.getElementById('lname').value;
+			let phno = document.getElementById('phno').value;
+			let email = document.getElementById('email').value;
+			let pwd = document.getElementById('pwd').value;
+			let bdate = document.getElementById('date').value;
+			let bmonth = document.getElementById('month').value;
+			let byear = document.getElementById('year').value;
+			let gender = null;
+			if (document.getElementById('m').checked) {
+				gender = 'Male'
+			} else if (document.getElementById('fm').checked) {
+				gender = 'Female';
+			}
+
+			let json = {
+				firstName: fn,
+				lastName: ln,
+				phoneNo: phno,
+				email: email,
+				password: pwd,
+				birthdate: bdate + bmonth + byear,
+				gender: gender
+			};
+			console.log('JSON:', json);
+			event.preventDefault();
+		}
+	</script>
+</head>
+
+<body>
+	<div class="container back text-center top">
+		<h1>Fill in your personal detail</h1>
+		<br>
+		<form onsubmit="output()">
+			<div class="row">
+				<div class="input-field col s6">
+					<input id="fname" type="text" class="validate">
+					<label for="first_name">First Name</label>
+				</div>
+				<div class="input-field col s6">
+					<input id="lname" type="text" class="validate">
+					<label for="last_name">Last Name</label>
+				</div>
+				<br>
+				<div class="input-field col s12">
+					<input id="phno" type="tel" class="validate" pattern="\+91\d{10}$" title="mobile number should start with +91 & followed by 10 digits"
+					 required>
+					<label for="mobile_number">Mobile Number</label>
+				</div>
+				<br>
+				<div class="input-field col s12">
+					<input id="email" type="email" class="validate">
+					<label for="email">Email</label>
+				</div>
+				<div class="input-field col s12">
+					<input id="pwd" type="password" class="validate" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+					 required>
+					<label for="email">Password</label>
+				</div>
+				<div class="input-field col s12">
+					Birthday:
+					<select id="date" name="dd"></select>
+					<select id="month" name="mm"></select>
+					<select id="year" name="yyyy"></select>
+					<script type="text/javascript">date_populate("date", "month", "year");</script>
+				</div>
+
+				<div class="input-field col s12">
+					<p>
+						<label>
+							<input class="with-gap" id="fm" name="gender" type="radio" />
+							<span>Female</span>
+						</label>&nbsp;&nbsp;
+						<label>
+							<input class="with-gap" id="m" name="gender" type="radio" />
+							<span>Male</span>
+						</label>
+					</p>
+				</div>
+				<div class="col-md-12 top">
+					<button type="submit" class="btn btn-sm btn-primary">
+						<i class="fa fa-dot-circle-o"></i>Create Account</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+
+</html>
